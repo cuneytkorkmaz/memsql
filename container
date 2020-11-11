@@ -1,0 +1,47 @@
+
+#installation
+#export
+
+export LICENSE_KEY=paste_license_key_here
+export ROOT_PASSWORD=write_root_pw_here
+# Pull the image
+docker pull memsql/cluster-in-a-box
+
+
+# Spin up a MemSQL cluster on your machine
+docker run -i --init \
+    --name memsql-ciab \
+    -e LICENSE_KEY=[INPUT_YOUR_LICENSE_KEY] \
+    -p 3306:3306 -p 8080:8080 \
+    memsql/cluster-in-a-box
+
+# If you don't have a License key you can obtain one by 
+# registering on the MemSQL Customer Portal: https://portal.memsql.com/
+
+
+# Start the container
+docker start memsql-ciab
+
+
+# Connect to MemSQL Studio at http://localhost:8080
+# The default Username is root and Password should be left blank.
+
+
+# Connect to the container and open the MemSQL client application
+docker exec -it memsql-ciab memsql
+
+
+# You can also connect to MemSQL with a third-party tools like Sequel Pro or the MySQL client
+mysql -h 127.0.0.1 -u root -P 3306 --prompt="memsql> "
+
+
+# Stop and remove the container
+docker stop memsql-ciab && docker rm memsql-ciab
+
+## memsql bash
+
+docker exec -it memsql-ciab /bin/bash
+
+## memsqlctl list-nodes check
+
+memsqlctl list-nodes
